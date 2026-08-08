@@ -27,7 +27,7 @@ laid flat on a roof — so they have to be separate curves. The pairs below shar
 their parent's `viewBox`, which is what makes them a split rather than two
 downloads.
 
-## Vector (47 files)
+## Vector (56 files)
 
 | file | brand | source |
 |---|---|---|
@@ -37,6 +37,10 @@ downloads.
 | `auth0_iso.svg` | Auth0 | split of the lockup — source not recorded |
 | `auth0_word.svg` | Auth0 | split of the lockup — source not recorded |
 | `basement.svg` | Basement | inline SVG from basement.studio |
+| `bioceres.svg` | Bioceres Crop Solutions | **traced, not downloaded.** This company publishes no SVG anywhere: biocerescrops.com and its Q4 investor site are both behind Cloudflare, Commons has nothing, and the only public mark is a 350x70 PNG at `s26.q4cdn.com/783252186/files/design/logo.png`. That PNG was composited on white, upscaled 5x, thresholded and run through `potrace`, then filled with `#004676` sampled off the original. The full lockup — symbol, name, and "CROP SOLUTIONS" on a second line. **Unused**: see `bioceres_word.svg` |
+| `bioceres_iso.svg` | Bioceres Crop Solutions | the trefoil alone, traced from the left 88 px of the same PNG. Unused today; it is the format a roof would want |
+| `bioceres_word.svg` | Bioceres Crop Solutions | the name alone, traced from a 262x44 crop of the same PNG, 6:1. The full lockup was tried first and rendered as a blue smudge: on 7.8 m of wall the second line is 30 cm of serif text. **Unused since the brand moved to spot 155**: see the `_light` file below |
+| `bioceres_word_light.svg` | Bioceres Crop Solutions | the same trace with the `#004676` fill swapped for white, and **this is the one `_brands` uses.** Not a taste call: the wall on spot 155 is 64 % `Glass Dark` #15181b across the band the logo occupies, where the navy is 1.5:1 and white is 12:1. White is also what the brand itself uses on dark ground. Four brands in this list are white on warm concrete with no such answer available |
 | `belo.svg` | Belo | inline SVG from belo.app. The `fill` arrived as `var(--token-…, rgb(83,0,218))` and was replaced with `#5300da`: Blender does not resolve CSS variables and imported it black |
 | `brubank.svg` | Brubank | Webflow CDN, the footer logo of brubank.com, 135x28. Wordmark only, 4.8:1 — this brand has no separate symbol. The header file at the same CDN is the SAME lockup with 35 % of empty viewBox on its right, which would have sized the wall off dead space; both were rasterised and compared before choosing. The four bounding-box `mask` elements and the `clipPath` went out, for the reason recorded under `cocos.svg` |
 | `coderhouse.svg` | Coderhouse | Framer CDN, coderhouse.com, 811x236. Wordmark only, 8.4:1 |
@@ -45,6 +49,7 @@ downloads.
 | `cocos_word.svg` | Cocos Capital | split of `cocos.svg` — the five letters, 5:1. **This is the one `_brands` uses**: the lockup is 2.2:1 and its wall is bound by the height |
 | `complif.svg` | Complif | Webflow CDN, complif.com, 690x189. **White**: needs a dark facade |
 | `complif_dark.svg` | Complif | the same file with the `fill` at `#1c1c1c`, for when the brand moves to a light wall. Unused today: the facade it landed on is dark brick |
+| `decentraland.svg` | Decentraland | inline SVG from the decentraland.org header, 90x90. The three `linearGradient` fills were flattened to solid colours — `#FF6A55` for the disc, `#D22884` for the two peaks — because Blender resolves no gradient and imports the paths black. **The icon is the whole logo**: this brand publishes no wordmark in vector form, on its own site or anywhere else |
 | `despegar.svg` | Despegar | Wikimedia Commons |
 | `digitalhouse.svg` | Digital House | Prismic CDN, digitalhouse.com |
 | `etermax_new.svg` | Etermax | **source not recorded**. 38x43, the symbol rather than the wordmark |
@@ -56,10 +61,14 @@ downloads.
 | `lemon.svg` | Lemon | inline SVG from lemon.me |
 | `lemon_iso.svg` | Lemon | split of `lemon.svg` — same 274x63 viewBox |
 | `lemon_word.svg` | Lemon | split of `lemon.svg` — same 274x63 viewBox |
+| `maslow.svg` | Maslow | inline SVG from maslow.hr, 116x32. Symbol in three brand colours, wordmark in **white** — this is the only version the company publishes. **Unused since the brand moved to spot 172**: see the `_dark` file below |
+| `maslow_dark.svg` | Maslow | the same file with the white at `#111827`, and **this is the one `_brands` uses.** The wall on spot 172 is `Glass Light` #5f97a6, where white is 3.1:1 and the near-black is 7:1 — the first of these facades bright enough for the dark variant to be the right way round |
 | `mercadolibre.svg` | Mercado Libre | Commons, Spanish wordmark. **No handshake** |
 | `ml_iso.svg` | Mercado Libre | the handshake `mercadolibre.svg` lacks — **source not recorded** |
 | `mp_iso.svg` | Mercado Pago | **source not recorded**. 64x64, the light-blue handshake |
-| `mural.svg` | Mural | Commons, 2022 version. **Carries a white background box** |
+| `mural.svg` | Mural | Webflow CDN, the header logo of mural.co, 620x178, 3.5:1. **Replaces the Commons 2022 version that used to be here**, which carried a white background box the note at the bottom of this file was written about — that box is why nothing ever mounted it. The live file has none. Its `clipPath` went out for the reason recorded under `cocos.svg`, and one `fill="white"` path was dropped: rasterised before and after, it changes nothing |
+| `openzeppelin.svg` | OpenZeppelin | inline SVG from the openzeppelin.com header, 161x24, with the lowercase `viewbox` corrected — Blender's importer wants `viewBox` and returns an empty curve without it. The wordmark's `#0a0a0a` was turned **white**: the wall it hangs on is dark blue glass and the near-black lockup vanished into it. The shield keeps its three blues |
+| `openzeppelin_dark.svg` | OpenZeppelin | the site's own file, wordmark still near-black, for a pale wall |
 | `naranjax.svg` | Naranja X | Wikimedia Commons. Split by colour at runtime, not into files: the nine orange strokes are the word, the two violet ones the X |
 | `paisanos.svg` | Paisanos | inline SVG from paisanos.io. White wordmark plus lime symbol: needs a dark background |
 | `pomelo.svg` | Pomelo | inline SVG from pomelo.la |
@@ -103,10 +112,6 @@ gap is at least visible.
 **Four are white**: `aerolab`, `aleph`, `digitalhouse` and `pomelo` come from
 dark-background sites and disappear on a light facade. Either the dark variant
 gets sourced, or the sign carrying them has to be dark by design decision.
-
-**`mural.svg` carries the logo's white box**, which on a roofmark comes out as a
-white rectangle around the mark. It has to be cropped out or used as the panel
-itself.
 
 **`modo.png` is 436x96** and raster. On a 34 m party wall it does not hold up.
 If MODO goes on a large format, the vector has to be found.

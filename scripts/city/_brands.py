@@ -91,6 +91,18 @@ CAMPUS = [
     ("RIPIO",     "disc",     "#f7f3e8", "#7b2ff7", None),
     ("ETERMAX",   "bars",     "#f7f3e8", "#28292b", "etermax_word.svg"),
     ("OLX",       "ring",     "#f7f3e8", "#6e2fb8", None),
+    # The five below are all pinned as well, and all five are on a facade with
+    # no panel behind them, so the wall decides the colour and not this table.
+    # WHICH WALL EACH ONE GOT IS A COLOUR DECISION AS MUCH AS A SIZE ONE: the
+    # five walls were read with a ray before anything was written, and they are
+    # not the same material. OpenZeppelin's near-black wordmark and Bioceres'
+    # navy went to the two grey concrete walls; Maslow, whose logo is WHITE on
+    # the site and has no dark variant published, went to the teal one. Putting
+    # them in the order 90 reported would have hung the white one on grey.
+    ("OPENZEPPELIN", "square", "#f7f3e8", "#4f56fa", "openzeppelin.svg"),
+    ("MURAL",     "disc",     "#f7f3e8", "#ff4b4b", "mural.svg"),
+    ("MASLOW",    "triangle", "#101820", "#168bf6", "maslow.svg"),
+    ("BIOCERES",  "ring",     "#f7f3e8", "#004676", "bioceres_word.svg"),
 ]
 
 # The avenue: party walls and billboards. It talks to whoever is driving, not to
@@ -109,6 +121,9 @@ AVENUE = [
     ("BELO",         "disc",     "#f7f3e8", "#5300da", "belo.svg"),
     ("COCOS",        "ring",     "#f7f3e8", "#002c65", "cocos.svg"),
     ("BRUBANK",      "disc",     "#f7f3e8", "#614ad9", "brubank.svg"),
+    # the icon alone — this brand publishes no wordmark in vector form, and a
+    # square symbol is what the wall it got is bound by anyway
+    ("DECENTRALAND", "disc",     "#f7f3e8", "#ff2d55", "decentraland.svg"),
     # no vector
     ("MODO",         "disc",     "#f7f3e8", "#00a15a", None),
 ]
@@ -118,8 +133,10 @@ def pools(campus_filler, avenue_filler):
     """The real ones first, the invented filler after.
 
     The filler is the tables 04 already had. They are not thrown away: there are
-    94 signs and 21 real brands, so the remaining 73 — none of which reaches the
-    camera at a legible size — still carry the invented ones.
+    99 signs and 37 real brands, so the rest — none of which reaches the camera
+    at a legible size — still carry the invented ones. The ratio is the thing to
+    watch rather than either number: every real brand added takes a record away
+    from a made-up one, and five of them did exactly that in the last batch.
     """
     return ([b[:4] for b in CAMPUS] + list(campus_filler),
             [b[:4] for b in AVENUE] + list(avenue_filler))
@@ -358,6 +375,130 @@ HERO = {
                 # measure
                 "facade_frac": 0.95, "facade_tall": 0.34,
                 "facade_z": 0.74, "facade_depth": 0.32},
+    # ---- the five that came in when the corridor was already full ----------
+    #
+    # THE CITY HAD THREE FREE WALLS AND FIVE BRANDS TO PLACE, and the two extra
+    # ones did not come from relaxing anything. They came from two questions 90
+    # does not ask:
+    #
+    #   · a sign carrying an INVENTED name is not a client. Taking one over
+    #     removes a made-up roofmark and adds a real logo, which is the trade
+    #     the video wants. Maslow took Pampa's and Mural took Ombú's.
+    #   · a building with two arms has two walls on two different PLANES. That
+    #     is the Ualá / Brubank arrangement, and it is declared in SHARED.
+    #     Mural and Bioceres share the U at (33.75, -231.25).
+    #
+    # Every one of the five is `facade_only`: a logo hung high on the front,
+    # nothing built on the deck.
+    #
+    # THE WALL WAS READ BEFORE THE BRAND WAS ASSIGNED. A ray fired at each of
+    # the five reports the material band by band, and they are not alike:
+    #
+    #   (-84.2, -89.8)   Concrete Cool2  #8d9599   cornices every 7.6 m
+    #   ( 66.2,-231.2)   Brick Warm      #a86a4c   4.6 m to 23.8, unbroken
+    #   ( 66.2,-260.4)   Facade Teal     #2f7f74   banded with Glass Light
+    #   ( 44.0,-227.5)   Concrete Cool2  #8d9599   plain to 12.2 m
+    #   ( 23.5,-227.5)   Concrete Cool2  #8d9599   the other arm of the same U
+    #
+    # so the two dark logos went to grey walls, the white one to the teal wall,
+    # and the coral symbol to the brick. SOURCES.md lists four brands that are
+    # white on warm concrete with no answer; this batch does not add a fifth.
+    #
+    # The tallest wall in the free set (32 m) and the widest (21.3 m), which is
+    # what a 6.7:1 lockup needs: the width binds and `facade_tall` is only there
+    # to stop the height taking over. It sits in the band between the cornices
+    # at 23.4 and 31.0 m — those stand 0.45 m proud of the wall and a logo
+    # crossing one comes out sliced, which is the Coderhouse lesson.
+    "OPENZEPPELIN": {"word": "openzeppelin.svg", "iso": "openzeppelin.svg",
+                     "facade": True, "facade_only": True,
+                     "facade_side": "left", "facade_at": (-84.2, -89.8),
+                     "facade_frac": 0.78, "facade_tall": 0.12,
+                     "facade_z": 0.85, "facade_depth": 0.45},
+    # A SQUARE SYMBOL ON THE WALL WITH THE MOST SECONDS ON IT — 10.0, against
+    # 1.0 for the wall above. What binds a square is the HEIGHT, and this one
+    # has 19.2 m of unbroken brick to work with, so the symbol lands at 12.2 m
+    # where a wordmark on the same wall would have been 12.9 wide and 2.6 tall.
+    # This brand publishes no wordmark in vector form; the icon is the whole
+    # logo and it is the format this wall wanted anyway.
+    "DECENTRALAND": {"iso": "decentraland.svg", "word": "decentraland.svg",
+                     "facade": True, "facade_only": True, "facade_art": "iso",
+                     "facade_side": "left", "facade_at": (66.2, -231.2),
+                     "facade_frac": 0.80, "facade_tall": 0.50,
+                     "facade_z": 0.62, "facade_depth": 0.40},
+    # THE FRONT OF SPOT 172, one wing at (270.2, -243.0), which is the biggest
+    # wall this project has given a brand: 45.9 m of run, `wall_seen` 1.00 and
+    # the kerb 3.0 m away. It was held by a SECOND Ripio record whose art was a
+    # generic violet disc — Ripio publishes no vector — so the trade is the one
+    # the video wants, an invented-looking mark out and a real logo in. See the
+    # pin on Sign.019.
+    #
+    # The dark file, not the white one. The wall is `Glass Light`, #5f97a6:
+    # white on it is 3.1:1 and the near-black wordmark is 7:1, and this is the
+    # first of these walls bright enough for that to be the right way round.
+    # Its old home was a teal band where white was the only option.
+    "MASLOW": {"word": "maslow_dark.svg", "iso": "maslow_dark.svg",
+               "facade": True, "facade_only": True,
+               "facade_side": "left", "facade_at": (270.2, -243.0),
+               "facade_frac": 0.48, "facade_tall": 0.36,
+               "facade_z": 0.75, "facade_depth": 0.50},
+    # THE RIGHT FACE OF SPOT 107, the 32 m tower at (33.75, -254.75), asked
+    # for. Only one of its two faces is usable at all: the left one is `seen`
+    # 0.00, hidden whole by the block in front of it.
+    #
+    # AND ON A TOWER THE HEIGHT IS THE WHOLE DECISION, because visibility and
+    # framing pull opposite ways. Measured up this wall:
+    #
+    #     z      seen    in frame
+    #     6–9    0.00    6–7 s      the base is behind the neighbour
+    #     11     0.52    5.7 s
+    #     18     0.81    3.3 s
+    #     26+    1.00    0.0 s      seen whole, and the move never frames it
+    #
+    # So the best band of wall on this building — 7.5 m of clean concrete from
+    # 4.8 to 12.2, enough for a logo twice this size — is the one nothing can
+    # see, and the part that is seen whole is above the top of the shot. 19 m
+    # is where the two curves cross.
+    #
+    # It crosses floor lines on purpose: every band between 16 and 22 is teal
+    # or pale glass, so a black-and-primary wordmark reads across all of them.
+    # That is the opposite of the Bioceres call one entry down, and the reason
+    # is the ink, not the wall.
+    "MURAL": {"word": "mural.svg", "iso": "mural.svg",
+              "facade": True, "facade_only": True,
+              "facade_side": "right", "facade_at": (33.75, -254.75),
+              "facade_frac": 0.50, "facade_tall": 0.19,
+              "facade_z": 0.592, "facade_depth": 0.35},
+    # THE LEFT FACE OF SPOT 155, the east arm of the C at (211.0, -303.4), and
+    # asked for. It is the same wall on paper as its neighbour at (192.5,
+    # -303.4) — 38.4 m of run, seen whole — and the difference is the only one
+    # that matters here: this one has the kerb 2.9 m away and that one has it
+    # 21.4, because it faces into the complex.
+    #
+    # THE WHITE FILE, AND A MATERIAL IS A DISTRIBUTION. One ray at the centre
+    # of this face answers `Concrete Cool2`, #8d9599, and on that the navy is a
+    # comfortable 3.4:1 — so the navy went up, and the render showed it on
+    # near-black glass. The single ray had hit a MULLION. Sampled across the
+    # run at the band the logo occupies, 8.8–11.5 m, the wall is 64 % `Glass
+    # Dark` #15181b and 36 % concrete: navy on it is 1.5:1. White is 12:1, and
+    # is what the brand uses on dark ground.
+    #
+    # AND THEN IT HAS TO SIT IN ONE BAND. White reads on the glass and vanishes
+    # on the slab, so a logo spanning both loses the letters that fall on the
+    # pale part — the first three, in the render that caught it. This wall has
+    # two clean glass runs, 5.75–8.35 and 9.75–12.15, and the sign is sized to
+    # fit inside the upper one rather than centred on the wall and left to
+    # cross a floor line. That costs about 3 m of width and it is worth it.
+    #
+    # THE WORDMARK ALONE, NOT THE LOCKUP, and it is the same call Cocos made
+    # for a different reason. The full lockup sets "CROP SOLUTIONS" on a second
+    # line under the name: at this size that line is a few centimetres of serif
+    # text and the whole thing renders as a blue smudge. The name alone is 6:1,
+    # so the width binds.
+    "BIOCERES": {"word": "bioceres_word_light.svg", "iso": "bioceres_iso.svg",
+                 "facade": True, "facade_only": True,
+                 "facade_side": "left", "facade_at": (211.0, -303.4),
+                 "facade_frac": 0.45, "facade_tall": 0.20,
+                 "facade_z": 0.842, "facade_depth": 0.35},
     "AUTH0": {"iso": "auth0_iso.svg", "word": "auth0_word.svg",
               "iso_frac": 0.55, "roof_frac": 0.72},
     "LEMON": {"iso": "lemon_iso.svg", "word": "lemon_word.svg",
@@ -369,9 +510,18 @@ HERO = {
               "face": "#f7f3e8"},
     # the symbol in the roofmark and the wordmark across the left facade, which
     # is the face this camera sees on that side
+    # `facade_at` IS NOT DECORATION HERE, it is the fix for a wordmark that
+    # moved on its own. This building is an L of two wings and the sign's owner
+    # — (349.75, -167.0), the CELL's address — falls in the 0.1 m gap between
+    # their padded footprints, so `site.hit` answered with whichever box the
+    # solids file happened to list first. Adding five brands elsewhere in the
+    # city changed that order, and Takenos' word silently jumped 21 m from the
+    # north arm to the south one. Nothing failed and no check covers it: the
+    # logo was on a wall either way. Naming the wing takes the question away.
     "TAKENOS": {"iso": "takenos_iso.svg", "word": "takenos_word.svg",
                 "iso_frac": 0.80, "roof_frac": 0.0,
                 "facade": True, "facade_side": "left",
+                "facade_at": (342.0, -149.8),
                 "facade_frac": 0.80, "facade_tall": 0.26, "facade_z": 0.60,
                 "iso_ink": "#6d37d5", "word_ink": "#6d37d5"},
     # the symbol alone on the party wall, with no panel, and the wordmark laid
@@ -574,6 +724,25 @@ EXTRA = [
     # roofmark is ever raised from it.
     {"at": (-104.66, -55.56), "spot": 75, "brand": "REVAMOS",
      "kind": "roofmark", "grow": 1.45},
+    # OpenZeppelin, and it is the only one of the five new brands that needs an
+    # anchor. Its cell — the 32 m tower at (-84.25, -89.75) — carries NO sign at
+    # all, which is the one condition `plan_extra` runs under. The other four
+    # took over a record that already existed (Pampa's, Ombú's, Salto's and
+    # Timbó's), and a cell that already has a record is where an anchor is
+    # silently never placed: see the note on Cocos below.
+    #
+    # THE ORDER OF THIS LIST DOES NOT DECIDE THE ORDINALS, and that is worth
+    # knowing before trusting one. The anchors are numbered from Sign.094 in
+    # the order the LOT PASS reaches their cells, not in the order they are
+    # written here, so adding this entry — at the end of the list — renamed the
+    # four below it anyway: Revamos went from 094 to 095 and so on down.
+    #
+    # It costs nothing today because none of these five is in PIN: each is
+    # carried by its `brand` key and finds its wall through `facade_at`. It
+    # would cost something the day one of them is pinned by ordinal, which is
+    # why the numbers here are not to be quoted anywhere else.
+    {"at": (-84.2, -89.8), "spot": 132, "brand": "OPENZEPPELIN",
+     "kind": "roofmark", "grow": 1.45},
     # COCOS IS NOT HERE, and the reason is worth the six lines. Its wall —
     # (187, -75), the best free one in the city — is a building that already has
     # a sign record: Sign.002, the Mercado Libre anchor, whose own art HERO
@@ -621,6 +790,15 @@ SHARED = {
     # `right` was rendered as the alternative and is worse: 13.3 m of run
     # instead of 29.5, and the brown building next door eats the far half of it.
     (-12.75, -75.0): "Ualá on the south arm, Brubank on the north one, asked for",
+    # THE U AT (33.75, -231.25) WAS HERE and no longer needs to be: it carried
+    # Mural and Bioceres, one per arm, because the corridor had three free walls
+    # and five brands to place. Bioceres moved to spot 155 and the U is down to
+    # one brand, so the exception is retired rather than left declared — a
+    # standing exception nobody re-reads is how the rule stops being a rule.
+    #
+    # Worth keeping from it: the U's THIRD arm, the 30.8 m one at (33.8,
+    # -238.7), is its longest wall and faces INTO the complex. Nothing goes on
+    # it. That is the mistake three brands already made.
 }
 
 
@@ -676,7 +854,42 @@ PIN = {"Sign.023": "LEMON", "Sign.014": "TAKENOS",
        # on is the one in HERO. The pin only stops the allocation walking the
        # brand off to another roof the next time this table grows.
        "Sign.061": "BRUBANK",
-       "Sign.058": "ETERMAX"}
+       "Sign.058": "ETERMAX",
+       # THE FOUR THAT TAKE OVER A SIGN NOBODY WOULD MISS. Three were carrying
+       # a company that does not exist and the fourth a duplicate drawn with a
+       # generic symbol, and all four brands below are `facade_only`, so what
+       # happens is a trade: the roofmark or mast is never built and a real
+       # logo appears on a wall.
+       #
+       # Mural lands on the very building its record is on, Ombú's. The other
+       # three are the Cocos arrangement: the record is a sign the shot never
+       # reaches or never raises, and it is here only so the allocation cannot
+       # walk the brand off to another roof the next time this table grows.
+       # Maslow moved off Pampa's building and onto Sign.019, which is a
+       # different kind of takeover: 019 was a SECOND Ripio, drawn as a generic
+       # violet disc because Ripio publishes no vector, and the brand keeps its
+       # parapet on Sign.069.
+       #
+       # AND NEITHER A PIN NOR A DROP MAKES THAT DISC GO AWAY. Both were tried
+       # and both do the same thing, because the pool is shorter than the list
+       # of signs: taking 019 hands Ripio to the next site down (021, which was
+       # OLX), OLX to the one after it (022, Zonda's), and Zonda lands on the
+       # mast Maslow vacated. Four records shuffle and the violet disc is still
+       # on camera, 43 m of street away and a third of the size. A brand only
+       # leaves the frame by leaving the pool or by getting a real vector.
+       "Sign.019": "MASLOW",        # was a second RIPIO, generic disc
+       # Mural moved to spot 107, whose record is Sign.057 — the parapet
+       # Bioceres used to hold as an unbuilt anchor. When Bioceres left, the
+       # allocation gave it to PILAR, an invented name, which DOES build it:
+       # 16.6 x 3.8 m and legible enough to enter 93's count. Pinning Mural
+       # here puts a real brand on the site and retires that sign in one move.
+       "Sign.057": "MURAL",         # was PILAR; before that Bioceres' anchor
+       "Sign.046": "DECENTRALAND",  # was SALTO; the wall is at (66.2, -231.2)
+       # Bioceres came off the U's west arm and onto spot 155, asked for. Same
+       # shuffle as Maslow above and worth reading together: 021 was the site
+       # Ripio had just been pushed onto, so taking it pushes Ripio on again.
+       # The disc does not leave the frame, it walks.
+       "Sign.021": "BIOCERES"}      # was RIPIO on spot 155, before that OLX
 DROP = {"Sign.054",          # flat Satellogic on 98: the 3D one on 163 remains
         # the RIPIO roof on 179, which is the Etermax building: its wordmark
         # hangs off that facade and the Preguntados icon is laid flat on that

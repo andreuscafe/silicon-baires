@@ -116,6 +116,7 @@ Try a grade before committing to it: `?ev=0.4&env=1.3&contrast=1.2`.
 ```bash
 npm run record                        # capture/city.mp4 + capture/city.mov
 npm run record -- --w 3840 --h 2160   # 4K
+npm run record -- --w 2160 --h 3840   # 4K vertical, 9:16
 npm run record -- --ss 1 --to 24      # a one-second test, in seconds
 ```
 
@@ -252,9 +253,17 @@ are what a cap *means* on this shot:
 - **205 m** — the same wedge, smaller.
 - **185 m** — `widest()` at 30,6°. Clean, and the widest opening that is.
 
-The capture skips the refit outright: 1920×1080 is the shot's own aspect, so it
-would be a no-op, but that is an equality between two divisions and the video
-does not get to depend on a rounding.
+The capture skips the refit **when the frame is the shot's own aspect** —
+1920×1080 and 3840×2160 would be a no-op, but that is an equality between two
+divisions and the video does not get to depend on a rounding.
+
+**A vertical capture is the other case, and it needs the refit.** 9:16 is 0,5625,
+below the 0,765 threshold and narrower than any phone in the table above. Left
+unfitted it ships the exact frame `fitToAspect` was written to prevent: the
+306 m opening becomes 544 m of screen, about 1000 m of ground on a city 786 m
+across. Fitted, it flies the whole pan at 125 m — the title reaches 118 and
+`TITLE_FILL` leaves the margin — at the film's own 30,6°, because the elevation
+is derived from the width actually flown and 125 m answers 16°, under it.
 
 ## When it fails, it has to say so
 

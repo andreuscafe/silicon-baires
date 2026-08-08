@@ -939,6 +939,23 @@ def build(rec, coll, site):
             mark(m, rec["mark"], s, ink, top)
     else:                                   # mast
         s = rec["w"]
+        # THE ONLY FORMAT THAT DID NOT KNOW ABOUT `facade_only`, and it is the
+        # one where leaving the structure up is worst: a mast with the brand
+        # moved to a wall is a 20 m pole holding a blank disc over a roof. The
+        # billboard, the medianera and the roofmark each grew this branch when
+        # a brand landed on one of them; this one had never been asked, so it
+        # went straight to `hero["iso_frac"]` and raised a KeyError the day a
+        # facade brand was pinned to a mast. Same shape as 98_check_floating's
+        # TEST B: a rule that had been passing on a question nobody asked it.
+        if hero and hero.get("facade_only"):
+            for k in hero.get("facade_arts",
+                              [hero.get("facade_art", "word")]):
+                hero_facade(m, rec, hero, site, key=k)
+            if hero.get("roof_art"):
+                hero_word(m, rec, hero, site, key=hero["roof_art"])
+            ob = m.build(rec["name"], coll)
+            ob.location = (rec["x"], rec["y"], rec["z"])
+            return ob
         h = s * MAST
         m.cyl((0, 0, 0), 0.45, h, frame, segs=10, xform=x)
         # the disc is a flat cylinder stood on edge, so the mark sits on its

@@ -67,11 +67,16 @@ const fitOpts = {
   hero: flags.has("phero") ? num("phero", 0) : undefined,
   off: flags.has("nofit"),
 };
-// Never under capture. 1920x1080 IS the shot's own aspect, so the fit would
-// return it unchanged anyway — but that is an equality between two divisions,
-// and the video is the deliverable. It does not get to depend on a rounding.
-let shot = capturing
-  ? cfg.shot : fitToAspect(cfg.shot, viewW / viewH, bounds, fitOpts);
+// Skipped under capture WHEN THE FRAME IS THE SHOT'S OWN ASPECT. 1920x1080 and
+// 3840x2160 would come back unchanged anyway, but that is an equality between
+// two divisions and the video is the deliverable: it does not get to depend on
+// a rounding. A vertical capture is the opposite case — 9:16 is 0,5625, well
+// under the 0,765 the fit exists for, and skipping it there ships the exact
+// frame fitToAspect was written to prevent: a 306 m opening stretched to 544 m
+// of ground, the city as a diagonal band with sky in one corner.
+const viewAspect = viewW / viewH;
+let shot = capturing && Math.abs(viewAspect - 1 / cfg.shot.aspect) < 1e-3
+  ? cfg.shot : fitToAspect(cfg.shot, viewAspect, bounds, fitOpts);
 
 // --- the renderer ----------------------------------------------------------
 // The one call on this page that can fail before anything else exists: no

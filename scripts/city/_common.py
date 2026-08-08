@@ -900,20 +900,35 @@ def brand_addresses(sites, signs, hero):
     # the logo moved to the neighbour's wall without having to re-read HERO.
     # When it is missing — an old manifest — it falls back to the plan and to
     # the destination declared in HERO, which is the approximate answer.
+    def plan_claims(rec):
+        out = [(rec["owner"][0], rec["owner"][1], rec["text"]),
+               (rec["x"], rec["y"], rec["text"])]
+        h = hero.get(rec["text"]) or {}
+        for k in ("facade_at", "roof_at"):
+            if h.get(k):
+                out.append((h[k][0], h[k][1], rec["text"]))
+        return out
+
     claims = []
     for rec in signs:
         if rec.get("drop"):
             continue
         b = rec.get("built")
-        if b:
+        # `built` IS THE CENTRE OF A MESH, NOT A POINT ON THE ROOF, and that is
+        # why the fallback below is not just for old manifests. A 55 m roofmark
+        # centred 2.2 m past the edge of the wing it stands on lands on no
+        # building at all, and the claim was silently dropped: Takenos' address
+        # came back EMPTY and 90 offered its 34.5 m wall as the best free site
+        # in the city. Six of 93 records were being lost that way — two by a
+        # couple of metres, four by forty — and every one of them is a building
+        # this project would have sold twice.
+        #
+        # So the plan is not an approximation used only when `built` is absent:
+        # it is what answers when the mesh's centre falls off the map.
+        if b and lands_on(b[0], b[1]) is not None:
             claims.append((b[0], b[1], rec["text"]))
             continue
-        claims += [(rec["owner"][0], rec["owner"][1], rec["text"]),
-                   (rec["x"], rec["y"], rec["text"])]
-        h = hero.get(rec["text"]) or {}
-        for k in ("facade_at", "roof_at"):
-            if h.get(k):
-                claims.append((h[k][0], h[k][1], rec["text"]))
+        claims += plan_claims(rec)
     out = {}
     for x, y, who in claims:
         at = lands_on(x, y)

@@ -461,11 +461,66 @@ Five things this project has already got wrong, so do not re-derive them:
   logo lives between about 5 m and the parapet. Paisanos gets 9,6 m as a symbol
   on its street face and 25 m as a word on its long one; both walls, one brand,
   is what `facade_arts: ["iso", "word"]` is for.
+- **The `run` 90 reports is the FOOTPRINT's, and the wall is narrower.**
+  `city_solids.json` publishes every rectangle padded 0.9 m, and the facade is
+  set back from the footprint again — Humand's HERO entry records 1.2 m on one
+  building. So 0.80 of `run` is not 80 % of the wall: on the four small walls in
+  this last batch it was closer to 95 %, and the symbol hung off the corner into
+  open air in three renders out of five. Nothing catches it: `99_check_overlap`
+  asks whether the logo is INSIDE something, and hanging off the end is the
+  opposite fault. **Size it, render it, look at the corner.**
+- **Read the wall before choosing the colour, not after.** Fire a ray at it and
+  read the material of the face that was hit — `obj.active_material` answers
+  "Glass Dark" for every band of every building, because a building is one mesh
+  with a dozen materials and the answer is `polygons[idx].material_index`. The
+  five walls in one batch were two greys, a brick, a teal and a glass, and
+  the assignment followed from that: the white logo to the teal wall, the navy
+  and the near-black to the greys. `SOURCES.md` lists four brands that are white
+  on warm concrete with no answer, and that list did not have to grow.
+- **But ONE ray is not the reading — a material is a distribution.** The line
+  above is right about `material_index` and wrong about the sample size, and
+  that gap put Bioceres' navy on near-black glass: the single ray at the centre
+  of the face had hit a MULLION and answered `Concrete Cool2`, 3.4:1, on a wall
+  that is 64 % `Glass Dark` where the navy is 1.5:1. Sample **across the run,
+  at the band the logo actually occupies**, and take the majority. Both halves
+  of that matter: the height, because the material is a function of z on every
+  banded facade here, and the width, because the frames are a different
+  material from the glass they hold.
+- **And then the logo has to fit INSIDE one band.** Contrast that holds on the
+  glass dies on the pale slab between floors, so a sign spanning a floor line
+  loses whichever letters land on the wrong side — the first three, in the
+  render that caught it. Print the material profile up the wall, find the
+  clean runs, and size the sign to one of them instead of centring it on the
+  wall and letting it cross. It costs width and it is not optional. The
+  exception is a logo whose ink reads on every band it crosses: Mural is
+  black-and-primary on a facade that is teal and pale glass all the way up, so
+  it spans four bands on purpose. **The ink decides this, not the wall.**
+- **On a tower, the height IS the decision, and the two criteria pull apart.**
+  `wall_seen` and `shot_cover` disagree up a tall building and both are right:
+  on spot 107 the best 7.5 m of wall — clean concrete, room for a logo twice
+  the size — is `seen` 0.00, hidden whole by the block in front, while the part
+  that is seen whole at 26 m is above the top of the frame for all 624 frames.
+  Measure both at four or five heights and put the sign where the curves cross.
+  A single measurement at mid-wall answers neither question.
 - **One brand per address, and the check now counts what HERO moved.** A sign
   record points at the roof it was planned on while its artwork can hang off a
   neighbour's wall, so a building carrying two logos used to read as empty.
   Deliberate exceptions go in `_brands.SHARED` with their reason, which is not
   the same as the rule not running.
+- **When 90 says the corridor is full, two things are still available and
+  neither is a compromise.** A sign carrying an INVENTED name is not a client:
+  pinning a real brand to that `Sign.NNN` with `facade_only` removes a made-up
+  roofmark and adds a real logo, which is the trade the video wants. And a
+  building with two arms has two walls on two PLANES — the Ualá / Brubank
+  arrangement — so put the two logos at different heights and declare it in
+  `SHARED`. Three free walls took five brands that way.
+- **A free building that is not free is the expensive one.** `brand_addresses`
+  claims an address from `built`, which is the CENTRE of a mesh, and a 55 m
+  roofmark can be centred past the edge of its own wing: the claim landed on no
+  building and was dropped without a word. Six of 93 records were being lost,
+  and what it cost was 90 offering the best free wall in the city — 34.5 m, on
+  Takenos' building. It falls back to the plan now. The counter is a dozen lines
+  over the manifest and it belongs in the loop after anything that moves a sign.
 
 **`93_check_signs` measures what was built, not what was planned.** Step 10
 writes `built` back into the manifest — the bounding box of the mesh it actually

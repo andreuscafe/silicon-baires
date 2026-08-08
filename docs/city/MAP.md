@@ -279,6 +279,17 @@ avoid offering a building that is taken. Deliberate exceptions are declared in
 hangs off a wall that can belong to the building next door. `brand_addresses`
 claims from `built` for exactly that reason.
 
+**And when `built` lands on nothing, the claim used to be thrown away.** `built`
+is the CENTRE of a mesh, and a 55 m roofmark can be centred a couple of metres
+past the edge of the wing it stands on — so `lands_on` returned None and the
+brand went unrecorded. Six of 93 records were being lost that way, two by about
+two metres and four by about forty, and the consequence was not a warning: it
+was `90_brand_sites` offering **the best free wall in the city**, 34.5 m of it,
+on a building that already had Takenos on the roof. `brand_addresses` now falls
+back to the plan — the owner, the planned point and HERO's destinations — when
+the mesh's centre falls off the map. **`built` is better evidence than the plan,
+and no evidence is worse than either.**
+
 **`built` is written by 10, into the manifest 04 wrote.** It is the bounding box
 of the mesh that actually exists, and it is the only honest input to
 `93_check_signs`: for a `facade_only` brand the plan says "roofmark, 7.1 m" and
